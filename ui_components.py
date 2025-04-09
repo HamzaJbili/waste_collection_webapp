@@ -102,3 +102,24 @@ def show_waste_composition_chart():
                  title='Municipal Solid Waste Composition',
                  color_discrete_sequence=px.colors.qualitative.Safe)
     st.plotly_chart(fig, use_container_width=True)
+
+def show_user_management():
+    st.markdown("<div class='title-style'>👥 User Management</div>", unsafe_allow_html=True)
+    users = get_users()
+    user_df = pd.DataFrame(users.items(), columns=["Username", "Hashed Password"])
+    st.dataframe(user_df)
+
+    st.markdown("### ➕ Add New User")
+    with st.form("add_user_form"):
+        new_username = st.text_input("Username")
+        new_password = st.text_input("Password", type="password")
+        submitted_user = st.form_submit_button("Add User")
+        if submitted_user and new_username and new_password:
+            if new_username in users:
+                st.warning("⚠️ Username already exists.")
+            else:
+                import hashlib
+                users[new_username] = hashlib.sha256(new_password.encode()).hexdigest()
+                save_users(users)
+                st.success(f"✅ User `{new_username}` added!")
+
