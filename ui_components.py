@@ -6,21 +6,50 @@ from auth import save_users, get_users  # ✅ Add get_users here
 def apply_styling():
     st.markdown("""
         <style>
-            .title-style { font-size:36px; font-weight:800; padding-bottom: 10px; }
-            .metric-style { font-size:24px; font-weight:bold; }
+            html, body, [class*="css"] {
+                font-family: 'Segoe UI', sans-serif;
+            }
+
+            .title-style {
+                font-size: 36px;
+                font-weight: 800;
+                padding-bottom: 10px;
+                color: #2E8B57;
+            }
+
+            .metric-style {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
             .card {
-                background: white;
-                border-radius: 1rem;
-                padding: 1rem;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+                background: #ffffff;
+                border-radius: 16px;
+                padding: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
                 margin-bottom: 1rem;
             }
-            .stTextInput>div>div>input, .stButton>button, .stSelectbox>div>div>div {
-                font-size: 16px !important; border-radius: 10px;
+
+            .stTextInput>div>div>input, 
+            .stButton>button, 
+            .stSelectbox>div>div>div {
+                font-size: 16px !important; 
+                border-radius: 12px !important;
             }
+
+            .stButton>button {
+                background-color: #2E8B57 !important;
+                color: white !important;
+            }
+
+            .stButton>button:hover {
+                background-color: #256d45 !important;
+            }
+
             footer {visibility: hidden;}
         </style>
     """, unsafe_allow_html=True)
+
 
 def show_logo_title():
     st.image("https://cdn-icons-png.flaticon.com/512/2984/2984615.png", width=60)
