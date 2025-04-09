@@ -4,56 +4,71 @@ import streamlit as st
 from auth import save_users, get_users  # ✅ Add get_users here
 
 def apply_styling():
-    st.markdown("""
-        <style>
-            html, body, [class*="css"] {
-                font-family: 'Segoe UI', sans-serif;
-            }
+   st.markdown("""
+<style>
+/* Universal Font */
+html, body, [class*="css"] {
+    font-family: 'Segoe UI', sans-serif;
+    color: #212121;
+    background-color: #f7fafc;
+}
 
-            .title-style {
-                font-size: 36px;
-                font-weight: 800;
-                padding-bottom: 10px;
-                color: #2E8B57;
-            }
+/* Titles */
+.title-style {
+    font-size: 36px;
+    font-weight: 800;
+    padding-bottom: 10px;
+    color: #1b5e20;
+}
 
-            .metric-style {
-                font-size: 24px;
-                font-weight: bold;
-            }
+/* Cards */
+.card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    margin-bottom: 1rem;
+}
 
-            .card {
-                background: #ffffff;
-                border-radius: 16px;
-                padding: 1.5rem;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-                margin-bottom: 1rem;
-            }
+/* Input Elements */
+.stTextInput>div>div>input,
+.stNumberInput>div>div>input,
+.stButton>button,
+.stSelectbox>div>div>div {
+    font-size: 16px !important;
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 0 0 1px #a5d6a7;
+    border: none;
+}
 
-            .stTextInput>div>div>input, 
-            .stButton>button, 
-            .stSelectbox>div>div>div {
-                font-size: 16px !important; 
-                border-radius: 12px !important;
-            }
+/* Button Styling */
+.stButton>button {
+    background-color: #388e3c;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+.stButton>button:hover {
+    background-color: #2e7d32;
+}
 
-            .stButton>button {
-                background-color: #2E8B57 !important;
-                color: white !important;
-            }
-
-            .stButton>button:hover {
-                background-color: #256d45 !important;
-            }
-
-            footer {visibility: hidden;}
-        </style>
-    """, unsafe_allow_html=True)
+/* Hide Streamlit Footer */
+footer { visibility: hidden; }
+</style>
+""", unsafe_allow_html=True)
 
 
 def show_logo_title():
     st.image("https://cdn-icons-png.flaticon.com/512/2984/2984615.png", width=60)
-    st.markdown("<div class='title-style'>🚛 WasteTrack: Smart Waste Collection</div>", unsafe_allow_html=True)
+    st.markdown("""
+<div style="background: linear-gradient(90deg, #e6f2ec, #ffffff); padding: 1.5rem 1rem; border-radius: 12px; margin-top: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+    <h1 style="font-size: 2.5rem; font-weight: 800; margin: 0; color: #1b5e20;">
+        🚛 WasteTrack: <span style="color:#388e3c;">Smart Waste Collection</span>
+    </h1>
+    <p style="font-size: 1.1rem; color: #555;">Your streamlined, eco-friendly waste management SaaS solution.</p>
+</div>
+""", unsafe_allow_html=True)
 
 def show_sidebar(settings):
     st.sidebar.image("https://cdn-icons-png.flaticon.com/512/2984/2984615.png", width=60)
