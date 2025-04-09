@@ -1,6 +1,7 @@
 # ui_components.py
 
 import streamlit as st
+from auth import save_users, get_users  # ✅ Add get_users here
 
 def apply_styling():
     st.markdown("""
@@ -32,6 +33,7 @@ def show_sidebar(settings):
     if st.session_state.user == "admin":
         with st.sidebar.expander("⚙️ Admin Settings", expanded=True):
             st.subheader("Manage Settings")
+
             new_vehicle = st.text_input("Add Vehicle")
             if st.button("Add Vehicle") and new_vehicle:
                 settings["vehicles"].append(new_vehicle)
@@ -54,11 +56,11 @@ def show_sidebar(settings):
                 st.success("Employee added.")
 
         with st.sidebar.expander("🔑 User Management", expanded=False):
-            from auth import users, save_users
-            users = get_users()
+            users = get_users()  # ✅ Fixed: Now this is valid!
             st.subheader("Create New Account")
             new_user = st.text_input("New Username")
             new_pass = st.text_input("New Password", type="password")
+
             if st.button("Create User") and new_user and new_pass:
                 if new_user in users:
                     st.warning("Username already exists.")
