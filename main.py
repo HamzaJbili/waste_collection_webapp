@@ -36,8 +36,8 @@ nav = st.sidebar.radio("🔍 Navigate", [
     "💳 Plans"
 ])
 
-# --- Tab 0: Add Entry ---
-with tabs[0]:
+# --- Tab: Add Entry ---
+if nav == "📝 Add Entry":
     st.markdown("<div class='title-style'>📝 Log Waste Collection</div>", unsafe_allow_html=True)
     with st.container():
         with st.form("add_entry", border=True):
@@ -63,24 +63,24 @@ with tabs[0]:
                 save_data(data)
                 st.success("🎉 Entry added successfully!")
 
-# --- Tab 1: Dashboard ---
-with tabs[1]:
+# --- Tab: Dashboard ---
+elif nav == "📈 Dashboard":
     st.markdown("<div class='title-style'>📊 Dashboard Overview</div>", unsafe_allow_html=True)
     show_kpis_dashboard(data)
 
-# --- Tab 2: Raw Data ---
-with tabs[2]:
+# --- Tab: Raw Data ---
+elif nav == "📊 Raw Data":
     st.markdown("<div class='title-style'>📄 Collected Data</div>", unsafe_allow_html=True)
     st.dataframe(data, use_container_width=True)
     st.download_button("⬇️ Download CSV", data.to_csv(index=False), "waste_data.csv")
 
-# --- Tab 3: Map ---
-with tabs[3]:
+# --- Tab: Map ---
+elif nav == "🗺️ Circuit Map":
     st.markdown("<div class='title-style'>🗺️ Circuit View</div>", unsafe_allow_html=True)
     show_map_tab(settings)
 
-# --- Tab 4: Subscription ---
-with tabs[4]:
+# --- Tab: Subscription ---
+elif nav == "💳 Plans":
     st.markdown("<div class='title-style'>💳 Subscription Plans</div>", unsafe_allow_html=True)
     st.info("Test payment setup using Stripe. Switch to live keys in production.")
     st.markdown("""
@@ -100,3 +100,4 @@ st.markdown("""
     <hr style="margin-top: 3rem;">
     <center style='color:gray'>© 2025 WasteTrack • Smart Waste Management Platform</center>
 """, unsafe_allow_html=True)
+
