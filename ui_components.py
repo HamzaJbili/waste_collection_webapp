@@ -1,6 +1,8 @@
 # ui_components.py
 import streamlit as st
 from auth import save_users, get_users
+import plotly.express as px
+import pandas as pd
 
 def apply_styling():
     st.markdown("""
@@ -88,3 +90,15 @@ def show_sidebar(settings):
                     users[new_user] = hashlib.sha256(new_pass.encode()).hexdigest()
                     save_users(users)
                     st.success("🎉 User created successfully.")
+
+def show_waste_composition_chart():
+    st.subheader("🧪 Waste Fraction Characterization")
+    waste_data = {
+        'Fraction': ['Organic', 'Plastic', 'Paper', 'Glass', 'Metal', 'Other'],
+        'Percentage': [42, 20, 15, 10, 8, 5]
+    }
+    df = pd.DataFrame(waste_data)
+    fig = px.pie(df, names='Fraction', values='Percentage',
+                 title='Municipal Solid Waste Composition',
+                 color_discrete_sequence=px.colors.qualitative.Safe)
+    st.plotly_chart(fig, use_container_width=True)
