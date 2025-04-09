@@ -1,126 +1,88 @@
 # ui_components.py
-
 import streamlit as st
+from auth import save_users, get_users
 
-def apply_styling():
-   def apply_styling():
 def apply_styling():
     st.markdown("""
         <style>
-            html, body, [class*="css"]  {
+            body {
+                background-color: #f8f9fa;
                 font-family: 'Segoe UI', sans-serif;
-                background: linear-gradient(120deg, #f9f9f9, #e0f7fa);
-                color: #333;
             }
             .title-style {
                 font-size: 36px;
                 font-weight: 800;
                 padding-bottom: 10px;
-                color: #1b4965;
+                color: #1a73e8;
+            }
+            .metric-style {
+                font-size: 24px;
+                font-weight: bold;
             }
             .card {
                 background: white;
-                border-radius: 16px;
+                border-radius: 1rem;
                 padding: 1rem;
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-                transition: transform 0.2s ease;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+                margin-bottom: 1rem;
             }
-            .card:hover {
-                transform: scale(1.01);
-            }
-            .stButton>button {
-                background-color: #1b4965;
-                color: white;
-                padding: 0.6rem 1.2rem;
-                border-radius: 8px;
-                font-size: 16px;
-                font-weight: bold;
-                border: none;
-                transition: all 0.3s ease;
-            }
-            .stButton>button:hover {
-                background-color: #62b6cb;
-                color: #fff;
-            }
-            .stSelectbox>div>div {
-                font-size: 16px;
-            }
-            .stTextInput>div>div>input {
-                font-size: 16px;
-                border-radius: 8px;
-            }
-            .stTabs [role="tab"] {
-                background-color: #fff;
-                padding: 0.8rem 1.2rem;
-                margin-right: 10px;
-                border-radius: 12px 12px 0 0;
-                font-weight: 600;
-                color: #1b4965;
-                border: 1px solid #ddd;
-            }
-            .stTabs [aria-selected="true"] {
-                background: #1b4965;
-                color: white;
-                border-bottom: 2px solid white;
+            .stTextInput>div>div>input,
+            .stButton>button,
+            .stSelectbox>div>div>div {
+                font-size: 16px !important;
+                border-radius: 10px;
             }
             footer {visibility: hidden;}
+            .sidebar .sidebar-content {
+                background-color: #ffffff;
+                border-right: 1px solid #e6e6e6;
+            }
         </style>
     """, unsafe_allow_html=True)
 
-
-
 def show_logo_title():
-    st.markdown("""
-        <div class='logo-title'>
-            <h1>🚛 WasteTrack</h1>
-            <p>Smart Waste Collection & Environmental Analytics</p>
-        </div>
-    """, unsafe_allow_html=True)
-
+    st.image("https://i.imgur.com/fxyD8rF.png", width=100)
+    st.markdown("<div class='title-style'>🚛 WasteTrack: Smart Waste Collection</div>", unsafe_allow_html=True)
 
 def show_sidebar(settings):
-    st.sidebar.markdown("## 🔧 Settings Panel")
+    st.sidebar.markdown("## 👤 User Panel")
+    st.sidebar.info(f"👋 Logged in as: `{st.session_state.user}`")
 
-    # Toggle Theme
-    dark_mode = st.sidebar.toggle("🌙 Dark Mode", value=st.session_state.get("dark_mode", False))
-    st.session_state.dark_mode = dark_mode
-
-    # Show user info
-    if "user" in st.session_state:
-        user = st.session_state.user
-        st.sidebar.success(f"👋 Logged in as `{user}`")
-    else:
-        user = "guest"
-        st.sidebar.warning("Not logged in")
-
-    # Admin panel only visible to admin
-    if user == "admin":
-        st.sidebar.markdown("---")
-        st.sidebar.subheader("⚙️ Admin Settings")
-
-        new_vehicle = st.text_input("Add Vehicle")
-        if st.button("Add Vehicle"):
-            if new_vehicle:
+    if st.session_state.user == "admin":
+        with st.sidebar.expander("⚙️ Admin Settings", expanded=True):
+            st.subheader("Manage Settings")
+            new_vehicle = st.text_input("Add Vehicle")
+            if st.button("Add Vehicle") and new_vehicle:
                 settings["vehicles"].append(new_vehicle)
                 from data_handler import save_settings
                 save_settings(settings)
-                st.success(f"🚛 Added vehicle: {new_vehicle}")
+                st.success("✅ Vehicle added.")
 
-        new_circuit = st.text_input("Add Circuit")
-        if st.button("Add Circuit"):
-            if new_circuit:
+            new_circuit = st.text_input("Add Collection Circuit")
+            if st.button("Add Circuit") and new_circuit:
                 settings["circuits"].append(new_circuit)
                 from data_handler import save_settings
                 save_settings(settings)
-                st.success(f"🗺️ Added circuit: {new_circuit}")
+                st.success("✅ Circuit added.")
 
-        new_employee = st.text_input("Add Employee")
-        if st.button("Add Employee"):
-            if new_employee:
+            new_employee = st.text_input("Add Employee")
+            if st.button("Add Employee") and new_employee:
                 settings["employees"].append(new_employee)
                 from data_handler import save_settings
                 save_settings(settings)
-                st.success(f"👷 Added employee: {new_employee}")
+                st.success("✅ Employee added.")
 
-    st.sidebar.markdown("---")
-    st.sidebar.caption("© 2025 WasteTrack")
+        with st.sidebar.expander("🔑 User Management", expanded=False):
+            users = get_users()
+            st.subheader("Create New Account")
+            new_user = st.text_input("New Username")
+            new_pass = st.text_input("New Password", type="password")
+            if st.button("Create User") and new_user and new_pass:
+                if new_user in users:
+                    st.warning("⚠️ Username already exists.")
+                else:
+                    import hashlib
+                    users[new_user] = hashlib.sha256(new_pass.encode()).hexdigest()
+                    save_users(users)
+                    st.success("🎉 User created successfully.")
+
