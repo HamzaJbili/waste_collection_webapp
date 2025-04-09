@@ -4,52 +4,69 @@ import streamlit as st
 
 def apply_styling():
    def apply_styling():
+def apply_styling():
     st.markdown("""
         <style>
-            body {
-                background: linear-gradient(135deg, #F5F7FA 0%, #c3cfe2 100%) !important;
+            html, body, [class*="css"]  {
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(120deg, #f9f9f9, #e0f7fa);
+                color: #333;
             }
-
             .title-style {
-                font-size: 38px; 
-                font-weight: 800; 
-                padding-bottom: 15px;
+                font-size: 36px;
+                font-weight: 800;
+                padding-bottom: 10px;
+                color: #1b4965;
             }
-
             .card {
-                background: rgba(255, 255, 255, 0.8); 
+                background: white;
                 border-radius: 16px;
-                padding: 1.5rem;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                backdrop-filter: blur(8px);
-                margin-bottom: 2rem;
+                padding: 1rem;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+                transition: transform 0.2s ease;
             }
-
-            .stTextInput>div>div>input, 
-            .stButton>button, 
-            .stSelectbox>div>div>div {
-                font-size: 16px !important;
-                border-radius: 10px;
-                padding: 0.4rem 0.75rem;
+            .card:hover {
+                transform: scale(1.01);
             }
-
-            .stButton>button:hover {
-                background-color: #4CAF50 !important;
-                color: white !important;
-                box-shadow: 0 0 0.5rem rgba(76, 175, 80, 0.5);
-                transition: 0.3s ease-in-out;
-            }
-
-            .stDownloadButton>button {
-                background-color: #2196F3 !important;
-                color: white !important;
+            .stButton>button {
+                background-color: #1b4965;
+                color: white;
+                padding: 0.6rem 1.2rem;
                 border-radius: 8px;
-                padding: 0.5rem 1rem;
+                font-size: 16px;
+                font-weight: bold;
+                border: none;
+                transition: all 0.3s ease;
             }
-
+            .stButton>button:hover {
+                background-color: #62b6cb;
+                color: #fff;
+            }
+            .stSelectbox>div>div {
+                font-size: 16px;
+            }
+            .stTextInput>div>div>input {
+                font-size: 16px;
+                border-radius: 8px;
+            }
+            .stTabs [role="tab"] {
+                background-color: #fff;
+                padding: 0.8rem 1.2rem;
+                margin-right: 10px;
+                border-radius: 12px 12px 0 0;
+                font-weight: 600;
+                color: #1b4965;
+                border: 1px solid #ddd;
+            }
+            .stTabs [aria-selected="true"] {
+                background: #1b4965;
+                color: white;
+                border-bottom: 2px solid white;
+            }
             footer {visibility: hidden;}
         </style>
     """, unsafe_allow_html=True)
+
 
 
 def show_logo_title():
