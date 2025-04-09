@@ -3,42 +3,51 @@
 import streamlit as st
 
 def apply_styling():
-    dark_mode = st.session_state.get("dark_mode", False)
-
-    if dark_mode:
-        background = "#1e1e1e"
-        text_color = "#fafafa"
-        card_bg = "#2c2c2c"
-    else:
-        background = "#f9f9f9"
-        text_color = "#222"
-        card_bg = "#ffffff"
-
-    st.markdown(f"""
+   def apply_styling():
+    st.markdown("""
         <style>
-            body {{
-                background-color: {background};
-                color: {text_color};
-                font-family: 'Segoe UI', sans-serif;
-            }}
-            .logo-title {{
-                background: linear-gradient(90deg, #a2facf 0%, #64acff 100%);
+            body {
+                background: linear-gradient(135deg, #F5F7FA 0%, #c3cfe2 100%) !important;
+            }
+
+            .title-style {
+                font-size: 38px; 
+                font-weight: 800; 
+                padding-bottom: 15px;
+            }
+
+            .card {
+                background: rgba(255, 255, 255, 0.8); 
+                border-radius: 16px;
                 padding: 1.5rem;
-                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                backdrop-filter: blur(8px);
                 margin-bottom: 2rem;
-                color: #fff;
-                box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-            }}
-            section[data-testid="stSidebar"] {{
-                background-color: {card_bg};
-            }}
-            .stTextInput, .stNumberInput, .stSelectbox {{
+            }
+
+            .stTextInput>div>div>input, 
+            .stButton>button, 
+            .stSelectbox>div>div>div {
                 font-size: 16px !important;
                 border-radius: 10px;
-            }}
-            button {{
-                border-radius: 8px !important;
-            }}
+                padding: 0.4rem 0.75rem;
+            }
+
+            .stButton>button:hover {
+                background-color: #4CAF50 !important;
+                color: white !important;
+                box-shadow: 0 0 0.5rem rgba(76, 175, 80, 0.5);
+                transition: 0.3s ease-in-out;
+            }
+
+            .stDownloadButton>button {
+                background-color: #2196F3 !important;
+                color: white !important;
+                border-radius: 8px;
+                padding: 0.5rem 1rem;
+            }
+
+            footer {visibility: hidden;}
         </style>
     """, unsafe_allow_html=True)
 
