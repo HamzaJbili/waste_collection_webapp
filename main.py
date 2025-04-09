@@ -27,8 +27,8 @@ settings = load_settings()
 show_logo_title()
 show_sidebar(settings)
 
-# --- Tabs ---
-tabs = st.tabs([
+# --- Custom Navigation ---
+nav = st.sidebar.radio("🔍 Navigate", [
     "📝 Add Entry", 
     "📈 Dashboard", 
     "📊 Raw Data", 
