@@ -1,13 +1,15 @@
 # main.py - WasteTrack Entry Point
+
 import streamlit as st
+import pandas as pd
+from datetime import datetime, time
 from auth import login_user, init_session
 from data_handler import load_data, save_data, load_settings
 from ui_components import apply_styling, show_logo_title, show_sidebar
 from dashboard import show_kpis_dashboard
 from map_tools import show_map_tab
 from config import DATA_FILE
-import pandas as pd
-from datetime import datetime, time
+import plotly.express as px
 
 # --- Init ---
 st.set_page_config(page_title="WasteTrack | Smart Waste Management", layout="wide")
@@ -55,10 +57,8 @@ if nav == "📝 Add Entry":
 
             if submitted:
                 duration = (datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).total_seconds() / 60.0
-                new_row = pd.DataFrame([[
-                    date, vehicle, circuit, trips, start_time.strftime("%H:%M"), end_time.strftime("%H:%M"),
-                    round(duration, 2), distance, fuel, load, receipt
-                ]], columns=data.columns)
+                new_row = pd.DataFrame([[date, vehicle, circuit, trips, start_time.strftime("%H:%M"), end_time.strftime("%H:%M"),
+                                         round(duration, 2), distance, fuel, load, receipt]], columns=data.columns)
                 data = pd.concat([data, new_row], ignore_index=True)
                 save_data(data)
                 st.success("🎉 Entry added successfully!")
@@ -67,6 +67,16 @@ if nav == "📝 Add Entry":
 elif nav == "📈 Dashboard":
     st.markdown("<div class='title-style'>📊 Dashboard Overview</div>", unsafe_allow_html=True)
     show_kpis_dashboard(data)
+
+    # ➕ Bonus Chart: Waste Composition Breakdown
+    st.markdown("### 🧪 Waste Fraction Characterization")
+    fraction_data = {
+        "Fraction": ["Organic", "Plastic", "Glass", "Metal", "Paper", "Other"],
+        "Percentage": [45, 20, 10, 5, 15, 5]
+    }
+    df_fraction = pd.DataFrame(fraction_data)
+    fig = px.pie(df_fraction, values='Percentage', names='Fraction', title="Composition of Waste Collected")
+    st.plotly_chart(fig, use_container_width=True)
 
 # --- Tab: Raw Data ---
 elif nav == "📊 Raw Data":
@@ -100,4 +110,3 @@ st.markdown("""
     <hr style="margin-top: 3rem;">
     <center style='color:gray'>© 2025 WasteTrack • Smart Waste Management Platform</center>
 """, unsafe_allow_html=True)
-
