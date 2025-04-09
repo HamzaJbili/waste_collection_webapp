@@ -23,7 +23,7 @@ def apply_styling():
     """, unsafe_allow_html=True)
 
 def show_logo_title():
-    st.image("https://i.imgur.com/fxyD8rF.png", width=100)
+    st.image("https://cdn-icons-png.flaticon.com/512/2984/2984615.png", width=60)
     st.markdown("<div class='title-style'>🚛 WasteTrack: Smart Waste Collection</div>", unsafe_allow_html=True)
 
 def show_sidebar(settings):
