@@ -6,22 +6,24 @@ import json
 import os
 from config import CREDENTIALS_FILE
 
-    
+# Load or define users
 def load_users():
     if os.path.exists(CREDENTIALS_FILE):
         with open(CREDENTIALS_FILE, "r") as file:
             return json.load(file)
     return {"admin": hashlib.sha256("admin123".encode()).hexdigest()}
 
-def save_users(users):
+# 🔧 Load users once and store in a global variable
+users = load_users()
+
+def save_users(users_dict):
     with open(CREDENTIALS_FILE, "w") as file:
-        json.dump(users, file)
+        json.dump(users_dict, file)
 
 def get_users():
     return users
 
 def login(username, password):
-    users = load_users()
     hashed = hashlib.sha256(password.encode()).hexdigest()
     return users.get(username) == hashed
 
@@ -43,3 +45,4 @@ def login_user():
             st.rerun()
         else:
             st.error("Invalid credentials")
+
