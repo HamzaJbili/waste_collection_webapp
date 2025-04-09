@@ -11,6 +11,8 @@ import pandas as pd
 # --- Init ---
 st.set_page_config(page_title="WasteTrack | Smart Waste Management", layout="wide")
 apply_styling()
+st.markdown("<style>.main { background-color: #f8f9fa; }</style>", unsafe_allow_html=True)
+
 init_session()
 
 # --- Auth ---
