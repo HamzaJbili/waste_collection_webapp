@@ -56,6 +56,7 @@ def show_logo_title():
     st.markdown("<div class='title-style'>🚛 WasteTrack: Smart Waste Collection</div>", unsafe_allow_html=True)
 
 def show_sidebar(settings):
+    st.sidebar.image("https://cdn-icons-png.flaticon.com/512/2984/2984615.png", width=60)
     st.sidebar.markdown("## 👤 User Panel")
     st.sidebar.info(f"👋 Logged in as: `{st.session_state.user}`")
 
