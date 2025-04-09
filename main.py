@@ -9,7 +9,7 @@ from config import DATA_FILE
 import pandas as pd
 from datetime import datetime, time
 
-# --- Setup ---
+# --- Init ---
 st.set_page_config(page_title="WasteTrack | Smart Waste Management", layout="wide")
 apply_styling()
 init_session()
