@@ -55,6 +55,7 @@ def show_sidebar(settings):
 
         with st.sidebar.expander("🔑 User Management", expanded=False):
             from auth import users, save_users
+            users = get_users()
             st.subheader("Create New Account")
             new_user = st.text_input("New Username")
             new_pass = st.text_input("New Password", type="password")
