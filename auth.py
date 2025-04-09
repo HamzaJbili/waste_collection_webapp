@@ -6,6 +6,7 @@ import json
 import os
 from config import CREDENTIALS_FILE
 
+    
 def load_users():
     if os.path.exists(CREDENTIALS_FILE):
         with open(CREDENTIALS_FILE, "r") as file:
@@ -15,6 +16,9 @@ def load_users():
 def save_users(users):
     with open(CREDENTIALS_FILE, "w") as file:
         json.dump(users, file)
+
+def get_users():
+    return users
 
 def login(username, password):
     users = load_users()
